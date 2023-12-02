@@ -10,7 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
+
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crm_assessment',
-        'USER': 'root',
-        'PASSWORD': 'password',
+        'USER': db_user,
+        'PASSWORD': db_password,
         'HOST': 'localhost',
         'PORT': '3306',
     }
