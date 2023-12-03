@@ -57,3 +57,13 @@ def verify_logout(request):
   logout(request)
   messages.success(request, "You Have Successfully Logged Out")
   return redirect('home')
+
+def delete_renter(request, pk):
+  if request.user.is_authenticated:
+    delete_info = Renter.objects.get(id=pk)
+    delete_info.delete()
+    messages.success(request, "You Have Successfully Delete a File")
+    return redirect('home')
+  else:
+    messages.success(request, "Permission Denied")
+    return redirect('home')
