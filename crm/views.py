@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+from .models import Renter
 
 # Create your views here.
 def home(request):
+  renters = Renter.objects.all()
 
   if request.method == 'POST':
     username = request.POST['username']
@@ -21,7 +23,7 @@ def home(request):
       return redirect('home')
 
   else:
-    return render(request, 'home.html', {})
+    return render(request, 'home.html', {'renters': renters})
   
 def register_user(request):
 
@@ -41,6 +43,15 @@ def register_user(request):
     return render(request, 'register.html', {'form': form})
   
   return render(request, 'register.html', {'form': form})
+
+def renter(request, pk):
+  if request.user.is_authenticated:
+    renter = Renter.objects.get(id=pk)
+    return render(request, 'renter.html', {'renter': renter})
+  
+  else:
+    messages.success(request, "You Have to Login First")
+    return redirect('home')
 
 def verify_logout(request):
   logout(request)
