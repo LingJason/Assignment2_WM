@@ -44,10 +44,10 @@ def register_user(request):
   
   return render(request, 'register.html', {'form': form})
 
-def renter(request, pk):
+def renter_info(request, pk):
   if request.user.is_authenticated:
-    renter = Renter.objects.get(id=pk)
-    return render(request, 'renter.html', {'renter': renter})
+    info_renter = Renter.objects.get(id=pk)
+    return render(request, 'renter.html', {'info_renter': info_renter})
   
   else:
     messages.success(request, "You Have to Login First")

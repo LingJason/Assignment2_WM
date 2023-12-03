@@ -4,22 +4,27 @@
 <div class="card">
   <div class="card-header">
     <strong>
-      {{% renter.first_name %}}
-      {{% renter.last_name %}}
+      {{ info_renter.first_name }}
+      {{ info_renter.last_name }}
     </strong>
   </div>
-  <p class="card-text">
-    <strong>Email: </strong>{{% renter.email %}} 
-  </p>
-  <p class="card-text">
-    <strong>Telephone: </strong>{{% renter.telephone %}}
-  </p>
-  <p class="card-text"></p>
-    <strong>Gender: </strong>{{% renter.gender %}}
-  </p>
+  <div class="card-body">
+    <strong>Email: </strong>
+    <p class="card-text">
+      {{ info_renter.email }}
+    </p>
+    <strong>Telephone: </strong>
+    <p class="card-text">
+      {{ info_renter.telephone }}
+    </p>
+    <strong>Gender: </strong>
+    <p class="card-text">
+      {{ info_renter.gender }}
+    </p>
+  </div>
 </div>
 
 <br/><br/>
 <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
-<a href="{% url 'delete_renter' renter.id %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'home' %}" class="btn btn-danger">Delete</a>
 {% endblock %}
