@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, AddRenterForm
 from .models import Renter
 
 # Create your views here.
@@ -31,7 +31,7 @@ def register_user(request):
     form = SignUpForm(request.POST)
     if form.is_valid():
       form.save()
-      username = form.clean_data['username']
+      username = form.cleaned_data['username']
       password = form.cleaned_data['password1']
       user = authenticate(username=username, password=password)
       login(request, user)
@@ -57,6 +57,19 @@ def verify_logout(request):
   logout(request)
   messages.success(request, "You Have Successfully Logged Out")
   return redirect('home')
+
+def add_renter(request):
+  form = AddRenterForm(request.POST or None)
+  if request.user.is_authenticated:
+    if request.method == "POST":
+      if form.is_valid():
+        add_renter = form.save()
+        messages.success(request, "You Have Successfully Added A New File")
+        return redirect('home')
+    return render(request, 'add_renter.html', {'form': form})
+  else:
+    messages.success(request, "You Have to Login First")
+    return redirect('home')
 
 def delete_renter(request, pk):
   if request.user.is_authenticated:

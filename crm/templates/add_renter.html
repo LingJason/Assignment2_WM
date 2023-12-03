@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+
+  <form method="POST" action="{% url 'add_renter' %}">
+    <!--always required in forms, safety -->
+    {% csrf_token %}
+
+    <br/>
+    <button type="submit" class="btn btn-primary">Add Renter</button>
+  </form>
+
+</div>
+
+{% endblock %}
