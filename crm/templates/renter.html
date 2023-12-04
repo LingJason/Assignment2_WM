@@ -26,5 +26,6 @@
 
 <br/><br/>
 <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+<a href="{% url 'update_renter' info_renter.id %}" class="btn btn-warning">Update</a>
 <a href="{% url 'delete_renter' info_renter.id %}" class="btn btn-danger">Delete</a>
 {% endblock %}

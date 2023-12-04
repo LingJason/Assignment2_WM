@@ -35,7 +35,7 @@ def register_user(request):
       password = form.cleaned_data['password1']
       user = authenticate(username=username, password=password)
       login(request, user)
-      messages.success(request, 'You have Successfully Registered')
+      messages.success(request, 'You Have Successfully Registered')
       return redirect('home')
     
   else:
@@ -50,7 +50,7 @@ def renter_info(request, pk):
     return render(request, 'renter.html', {'info_renter': info_renter})
   
   else:
-    messages.success(request, "You Have to Login First")
+    messages.success(request, "You Have To Login First")
     return redirect('home')
 
 def verify_logout(request):
@@ -68,14 +68,31 @@ def add_renter(request):
         return redirect('home')
     return render(request, 'add_renter.html', {'form': form})
   else:
-    messages.success(request, "You Have to Login First")
+    messages.success(request, "You Have To Login First")
     return redirect('home')
+  
+
+def update_renter(request, pk):
+  if request.user.is_authenticated:
+    current_renter = Renter.objects.get(id=pk)
+    form = AddRenterForm(request.POST or None, instance= current_renter)
+    if form.is_valid():
+      form.save()
+      messages.success(request, "You Have Updated A File")
+      return redirect('home')
+    return render(request, 'update_renter.html', {'form':form})
+  else:
+    messages.success(request, "You Have To Login First")
+    return redirect('home')
+
+
+
 
 def delete_renter(request, pk):
   if request.user.is_authenticated:
     delete_info = Renter.objects.get(id=pk)
     delete_info.delete()
-    messages.success(request, "You Have Successfully Delete a File")
+    messages.success(request, "You Have Successfully Delete A File")
     return redirect('home')
   else:
     messages.success(request, "Permission Denied")
